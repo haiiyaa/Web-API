@@ -1,0 +1,36 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Web;
+
+namespace WebApi.Models
+{
+    public class Flyvetur
+    {
+        public int FlyveturId { get; set; }
+        public string Flytype { get; set; }
+        public string Fra { get; set; }
+        public string Til { get; set; }
+        public DateTime Afgang { get; set; }
+        public DateTime Ankomst { get; set; }
+
+
+        public Flyvetur()
+        {
+
+        }
+
+
+        public Flyvetur(int flyveturId, string flytype, string fra, string til, string afgang, string ankomst)
+        {
+            this.FlyveturId = flyveturId;
+            this.Flytype = flytype;
+            this.Fra = fra;
+            this.Til = til;
+            CultureInfo provider = CultureInfo.InvariantCulture;
+            this.Afgang = DateTime.Parse(afgang);
+            this.Ankomst = DateTime.Parse(ankomst);
+        }
+    }
+}
