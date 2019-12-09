@@ -1,0 +1,69 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using WebApi.Models;
+
+namespace WebApi.Controllers
+{
+    public class FlyveturController : ApiController
+    {
+        static FlyveturKatalog _flyveKateloget = new FlyveturKatalog(); // Create (Post), Read (Get), Update (Put), Delete
+
+        [ActionName("GetAll")]
+        // get http://localhost:3142/api/Flyvetur/GetAll
+        public List<Flyvetur> Get()
+        {
+            return _flyveKateloget.GetAllItems();
+        }
+
+        [ActionName("Get")]
+        // get http://localhost:3142/api/Flyvetur/Get?i=1
+        public Flyvetur GetItemByIndex(int i)
+        {
+            return _flyveKateloget.GetSpecificItems(i);
+        }
+
+        [HttpPut]
+        [ActionName("Put")]
+        // update http://localhost:26936/api/Flyvetur/Put?flyveturId=1&flytype=Ged&fra=blah&til=blah&afgang=10-10-2015&ankomst=10-10-2015
+        public List<Flyvetur> Put(int flyveturId, string flytype, string fra, string til, string afgang, string ankomst)
+        {
+            return _flyveKateloget.UpdateItem(flyveturId, flytype, fra, til, afgang, ankomst);
+        }
+
+
+        [HttpPost]
+        [ActionName("Post")]
+        //        http://localhost:26936/api/Flyvetur/Post?flyveturId=1&flytype=wed&fra=asd&til=asd&afgang=10-10-2015&ankomst=10-10-2015
+        public List<Flyvetur> Post(int flyveturId, string flytype, string fra, string til, string afgang, string ankomst)
+        {
+            return _flyveKateloget.AddItem(flyveturId, flytype, fra, til, afgang, ankomst);
+        }
+
+
+        /* 
+         *  Content-Type: Application/json
+        {
+        "flyveturId":30, "flytype":"Gedeost", "fra":"København","til":"København","afgang":"10-10-2015","ankomst":"10-10-2015"
+        }
+         */
+        [HttpPost]
+        [ActionName("Post")]
+        // create http://localhost:26936/api/Flyvetur/Post?flyveturId=1&flytype=Ged&fra=blah&til=blah
+        public List<Flyvetur> Post(Flyvetur nyFlyvetur)
+        {
+            return _flyveKateloget.AddItem(nyFlyvetur);
+        }
+
+        [HttpDelete]
+        [ActionName("Delete")]
+        // delete http://localhost:3142/api/Flyvetur/Delete?i=1
+        public List<Flyvetur> Delete(int i)
+        {
+            return _flyveKateloget.RemoveItem(i);
+        }
+    }
+}
