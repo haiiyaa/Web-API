@@ -1,0 +1,81 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace WebApi.Models
+{
+    public class FlyveturKatalog
+    {
+        private List<Flyvetur> flyveturene = new List<Flyvetur>();
+
+        public FlyveturKatalog()
+        {
+            Flyvetur flyvetur1 = new Flyvetur(1, "Boing 767", "Kobenhavn", "Singapor", "12-02-1212", "12-02-1212");
+            Flyvetur flyvetur2 = new Flyvetur(2, "Boing 767", "Kobenhavn", "China", "12-02-1212", "12-02-1212");
+            Flyvetur flyvetur3 = new Flyvetur(3, "Boing 767", "Kobenhavn", "Sweden", "12-02-1212", "12-02-1212");
+            flyveturene.Add(flyvetur1);
+            flyveturene.Add(flyvetur2);
+            flyveturene.Add(flyvetur3);
+
+
+        }
+
+        public List<Flyvetur> GetAllItems()
+        {
+            return flyveturene;
+        }
+
+        public Flyvetur GetSpecificItems(int p)
+        {
+            return flyveturene[p-1];
+        }
+
+        public List<Flyvetur> UpdateItem(int flyveturId, string flytype, string fra, string til, string afgang, string ankomst)
+        {   
+            foreach (Flyvetur item in flyveturene)
+            {
+                if (item.FlyveturId == flyveturId)
+                {
+                    item.Flytype = flytype;
+                    item.Fra = fra;
+                    item.Til = til;
+                    item.Ankomst = DateTime.Parse(ankomst);
+                    item.Afgang = DateTime.Parse(afgang);
+                }
+            }
+            return flyveturene;
+        }
+
+        public List<Flyvetur> AddItem(int flyveturId, string flytype, string fra, string til, string afgang, string ankomst)
+        {
+            Flyvetur nyFlyvetur = new Flyvetur(flyveturId, flytype, fra, til,afgang,ankomst);
+            flyveturene.Add(nyFlyvetur);
+            return flyveturene;
+        }
+
+        public List<Flyvetur> AddItem(Flyvetur nyFlyvetur)
+        {
+            flyveturene.Add(nyFlyvetur);
+            return flyveturene;
+        }
+
+        public List<Flyvetur> RemoveItem(int id)
+        {
+            int counter = 0;
+            foreach (Flyvetur item in flyveturene)
+            {
+                if (item.FlyveturId == id)
+                {
+                    counter++;
+                    break;
+                }
+                counter++;
+            }
+            flyveturene.RemoveAt(counter-1);
+            return flyveturene;
+        }
+
+
+    }
+}
